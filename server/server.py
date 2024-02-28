@@ -2,7 +2,7 @@
 File name: server.py
 Author: Mario Llesta
 Created: 2024-02-17
-Last Edited: 2024-02-25
+Last Edited: 2024-02-28
 
 Summary:
 This module will start up and listen for connections on on a specified port
@@ -29,7 +29,7 @@ def start_server():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         try:
             # Timeout
-            sock.settimeout(10)
+            #sock.settimeout(10)
         
             # Bind it to an specific address an port
             sock.bind((HOST, PORT))
