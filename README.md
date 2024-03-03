@@ -1,7 +1,7 @@
 ![](./images/mylb_banner.png)
 
 <p align="center">
-<em>Developing my own wc Unix tool</em>
+<em>Developing my own Load Balancer</em>
 </p>
 
 
