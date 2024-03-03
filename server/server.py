@@ -2,7 +2,7 @@
 File name: server.py
 Author: Mario Llesta
 Created: 2024-02-17
-Last Edited: 2024-02-28
+Last Edited: 2024-03-03
 
 Summary:
 This module will start up and listen for connections on on a specified port
@@ -62,7 +62,7 @@ def handle_connection(client_conn, client_addr):
                 return
             print(f"[S]: Received data from {client_conn.getpeername()}...")
             
-            response = f"[S]: Hello from Backend Server {HOST}:{PORT}"
+            response = f"[S]: Hello from Backend Server: ({HOST}:{PORT})"
             http_response = f"HTTP/1.1 200 OK\r\nContent-Length: {len(response)}\r\n\r\n{response}"
             sleep(10)
                     

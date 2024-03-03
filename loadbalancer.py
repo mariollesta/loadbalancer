@@ -2,7 +2,7 @@
 File name: loadbalancer.py
 Author: Mario Llesta
 Created: 2024-02-18
-Last Edited: 2024-02-28
+Last Edited: 2024-03-03
 
 Summary:
 This module will be the load balancer.
@@ -17,6 +17,7 @@ from typing import List, Tuple
 from backend.Beserver import Beserver
 from server.server_db import server_info
 from algorithm.roundrobin import RoundRobin
+from healthcheck.healthcheck import Healthcheck, start_health_check
 
 
 # --- Constants and variables ---
@@ -32,16 +33,26 @@ for server in server_db:
     servers.append(Beserver(int(server["id"]), 
                             server["host"],
                             int(server["port"])))
+    
+lb_algorithm = None
+
+health_check_period = 15 # seconds
 
 
 # --- Functions ---
 def main():
-    lb_algorithm = None
     
     # LB Algorithm selection
     lb_algorithm = RoundRobin(servers)
     
+    # Server threads list
     lb_threads: List[Thread] = []
+    
+    # Health check instances for each server
+    health_checkers = [Healthcheck(server, health_check_period) for server in servers]
+    
+    # Start health check threads
+    health_check_threads = start_health_check(health_checkers)
     
     # Create the socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -60,7 +71,8 @@ def main():
             
             # Select the backend server where data will be sent
             be: Beserver = lb_algorithm.get_next_server()
-            if be:
+            if be and be.is_up:
+                # Create a thread and assign the client request to the healthy server
                 lb_thread = Thread(target=be.handle_beservers, args=(client_conn,))
                 lb_threads.append(lb_thread)
                 lb_thread.start()
@@ -73,7 +85,11 @@ def main():
         
     finally:
         sock.close()   
-        map(lambda th: th.join(), lb_threads) 
+        map(lambda th: th.join(), lb_threads)
+        
+        # Wait for health check threads to complete
+        for thread in health_check_threads:
+            thread.join()
 
 
 if __name__ == "__main__":
