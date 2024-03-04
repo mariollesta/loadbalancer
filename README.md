@@ -1,4 +1,4 @@
-![](./images/mylb_banner.png)
+![](./images/myloadbalancer.png)
 
 <p align="center">
 <em>Developing my own Load Balancer</em>
