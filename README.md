@@ -19,7 +19,7 @@ Following the guidelines of the [Coding Challenges blog](https://codingchallenge
 
 ## Requirements
 
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=101010)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=101010)](https://python.org)
 
 
 ---
