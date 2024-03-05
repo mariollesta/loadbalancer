@@ -2,10 +2,11 @@
 File name: healthcheck.py
 Author: Mario Llesta
 Created: 2024-03-02
-Last Edited: 2024-03-03
+Last Edited: 2024-03-05
 
 Summary:
-
+This module periodically checks the health of the application servers 
+to which we forward traffic.
 """
 
 # --- Imports ---
@@ -39,8 +40,8 @@ class Healthcheck:
                         self.server.is_up = False
                         self.is_healthy = False
                         
-            except Exception as e:
-                print(f"[Healthcheck]: Error during health check for server {self.server.id}: {e}")
+            except Exception:
+                print(f"[Healthcheck]: Error during health check for server {self.server.id}...")
                 self.server.is_up = False
                 self.is_healthy = False
             
