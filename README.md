@@ -39,5 +39,9 @@ On the other hand, open your favorite terminal application to be able to execute
 
 ## How to use
 
+To test the program, from the terminal we will access the repository that we have previously downloaded. This has the following structure:
+
+![](./images/myloadbalancer_tree.png)
+
 
 ---
