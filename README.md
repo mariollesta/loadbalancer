@@ -43,5 +43,26 @@ To test the program, from the terminal we will access the repository that we hav
 
 ![](./images/myloadbalancer_tree.png)
 
+First step:
+
+Go to the server directory and run three servers, which will be the ones to which the requests will be sent, on three different ports (in case you want to run more or less servers, modify the server_db.json file).
+
+In my case, I will run them on ports 5001, 5002 and 5003, respectively.
+
+```terminal
+python .\server.py <PORT>
+```
+
+The next step is to run the load balancer. To do this, we go one directory back and run the file loadbalancer.py specifying the port. In case of not specifying a port, it will be executed by default on port 5432.
+
+```terminal
+python .\loadbalancer.py <PORT>
+```
+
+With the servers and the balancer running, we make several curls to localhost to port 5432 and we see how the requests are distributed according to the Round Robin balancing algorithm, receiving in the client the response from the corresponding server.
+
+In the event that one of the servers goes down, the healthcheck configured in the balancer will log the downtime and bypass that server to send requests. To see a demonstration, we "pull" the server from port 5002: 
+
+If we bring the server back up on port 5002, the healthcheck will notify us and it will be taken into account again for request balancing.
 
 ---
