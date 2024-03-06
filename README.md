@@ -53,16 +53,33 @@ In my case, I will run them on ports 5001, 5002 and 5003, respectively.
 python .\server.py <PORT>
 ```
 
+![](./images/server5001.png)
+
 The next step is to run the load balancer. To do this, we go one directory back and run the file loadbalancer.py specifying the port. In case of not specifying a port, it will be executed by default on port 5432.
 
 ```terminal
 python .\loadbalancer.py <PORT>
 ```
 
+![](./images/lb_1.png)
+
+
 With the servers and the balancer running, we make several curls to localhost to port 5432 and we see how the requests are distributed according to the Round Robin balancing algorithm, receiving in the client the response from the corresponding server.
+
+![](./images/lb_2.png)
+
+![](./images/curl_1.png)
 
 In the event that one of the servers goes down, the healthcheck configured in the balancer will log the downtime and bypass that server to send requests. To see a demonstration, we "pull" the server from port 5002: 
 
+![](./images/lb_3.png)
+
+![](./images/curl_2.png)
+
 If we bring the server back up on port 5002, the healthcheck will notify us and it will be taken into account again for request balancing.
+
+![](./images/lb_4.png)
+
+![](./images/curl_3.png)
 
 ---
